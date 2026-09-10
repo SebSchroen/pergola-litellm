@@ -1,0 +1,43 @@
+version: v1
+components:
+  - name: litellm
+    docker:
+      image: docker.litellm.ai/berriai/litellm-database:latest
+    ports:
+      - 4000
+    ingresses:
+      - host: litellm
+        port: 4000
+    env:
+      - name: LITELLM_MASTER_KEY
+        config-ref: LITELLM_MASTER_KEY
+      - name: LITELLM_SALT_KEY
+        config-ref: LITELLM_SALT_KEY
+      - name: DB_HOST
+        component-ref: db
+      - name: POSTGRES_USER
+        config-ref: POSTGRES_USER
+      - name: POSTGRES_PASSWORD
+        config-ref: POSTGRES_PASSWORD
+      - name: POSTGRES_DB
+        config-ref: POSTGRES_DB
+      - name: DATABASE_URL
+        value: postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DB_HOST):5432/$(POSTGRES_DB)
+      - name: STORE_MODEL_IN_DB
+        value: "True"
+  - name: db
+    docker:
+      image: postgres:16
+    ports:
+      - 5432
+    env:
+      - name: POSTGRES_USER
+        config-ref: POSTGRES_USER
+      - name: POSTGRES_PASSWORD
+        config-ref: POSTGRES_PASSWORD
+      - name: POSTGRES_DB
+        config-ref: POSTGRES_DB
+    storage:
+      - name: postgres-data
+        path: /var/lib/postgresql/data
+        size: "10Gi"
