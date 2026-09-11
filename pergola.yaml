@@ -25,6 +25,8 @@ components:
         value: postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DB_HOST):5432/$(POSTGRES_DB)
       - name: STORE_MODEL_IN_DB
         value: "True"
+      - name: GOOGLE_PSE_ENGINE_ID
+        config-ref: GOOGLE_PSE_ENGINE_ID
   - name: db
     docker:
       image: postgres:16
