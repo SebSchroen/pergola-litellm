@@ -27,6 +27,8 @@ components:
         value: "True"
       - name: GOOGLE_PSE_ENGINE_ID
         config-ref: GOOGLE_PSE_ENGINE_ID
+    resources:
+      memory: 200Mi
   - name: db
     docker:
       image: postgres:16
