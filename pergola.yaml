@@ -2,7 +2,7 @@ version: v1
 components:
   - name: litellm
     docker:
-      image: docker.litellm.ai/berriai/litellm-database:latest
+      image: docker.litellm.ai/berriai/litellm-database:v1.106.2
     ports:
       - 4000
     ingresses:
